@@ -18,7 +18,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import InputAdornment from "@mui/material/InputAdornment";
 import axios from "axios";
-
+import "../static/css/background.css";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
 function Copyright(props) {
   return (
     <Typography
@@ -43,7 +45,9 @@ function SignUp() {
   const [profilePic, setProfilePic] = useState(null);
   const [coverPhoto, setCoverPhoto] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(null);
 
+  const navigate = useNavigate();
   const handleProfilePicChange = (e) => {
     const file = e.target.files[0];
     setProfilePic(file);
@@ -82,6 +86,13 @@ function SignUp() {
 
       body: JSON.stringify(formData),
     });
+    const jsonData = await response.json();
+    if (jsonData.message == "success") navigate("/routes/SignIn");
+    else
+      setError(
+        "This account already exists!! Use different email ID or password."
+      );
+    console.log(jsonData.message);
 
     const profilePicData = new FormData();
     profilePicData.append("profile_pic", profilePic);
@@ -164,6 +175,7 @@ function SignUp() {
                   autoComplete="family-name"
                 />
               </Grid>
+
               <Grid item xs={12}>
                 <label htmlFor="profile-pic-input">Profile Picture</label>
                 <input
@@ -245,7 +257,7 @@ function SignUp() {
                   }}
                 />
               </Grid>
-              <Grid>
+              <Grid item xs={12}>
                 <TextField
                   margin="normal"
                   required
@@ -276,13 +288,12 @@ function SignUp() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              <a
-                href="/routes/SignIn"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                Sign Up
-              </a>
+              Sign Up
             </Button>
+            <div>
+              {/* Other form elements */}
+              {error && <Alert severity="error">{error}</Alert>}
+            </div>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/routes/SignIn" variant="body2">

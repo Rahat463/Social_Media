@@ -33,7 +33,8 @@ import EventIcon from '@mui/icons-material/Event';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import { alpha } from '@mui/material/styles';
-
+import SimpleContainer from "../components/container";
+import Avatar from "@mui/material/Avatar";
 //start
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -212,6 +213,8 @@ export default function PersistentDrawerLeft() {
         </DrawerHeader>
         <Divider />
         <List>
+
+        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           {Object.entries(linksLeft).map(([text, url]) => {
             let iconComponent = null;
 
@@ -308,8 +311,9 @@ export default function PersistentDrawerLeft() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Post />
-        <Post />
+        {/* <Post />
+        <Post /> */}
+        <SimpleContainer/>
       </Main>
     </Box>
   );

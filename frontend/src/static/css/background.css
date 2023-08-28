@@ -1,0 +1,14 @@
+body {
+    background-image: url('');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Adjust as needed */
+    background-attachment: fixed; /* Optional */
+  }
+  
+  /* Or, set the background image for a specific container */
+  .container {
+    background-image: url('');
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat; /* Adjust as needed */
+    background-attachment: fixed; /* Optional */
+  }

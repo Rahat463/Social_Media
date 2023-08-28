@@ -20,30 +20,63 @@ from django.http import JsonResponse
 #     serializer = UsersSerializer(users, many=True)
 #     return Response(serializer.data)
 
+# @api_view(['POST'])
+# def setUsers(request):
+#     print("hellodworkd")
+    
+#     user_name = request.data.get('user_name')
+#     password = request.data.get('password')
+#     mobile_number = request.data.get('mobile')
+    
+#     birth_date = request.data.get('birth_date')
+#     email=request.data.get('email')
+#     print(0)
+#     # Users.objects.create(user_name=user_name, password=password, mobile_number=mobile,profile_pic=profile_pic, cover_photo=cover_photo,birth_date=birth_date)
+#     with connections['default'].cursor() as cursor:
+#         print(1)
+#         cursor.execute("INSERT INTO USERS (user_name, password, mobile_number, birth_date,email) VALUES (  %s, %s, %s, TO_DATE(%s, 'YYYY-MM-DD'),%s)",
+#             [user_name, password, mobile_number, birth_date,email])
+#         print(2)
+#     try:
+#         # Your user creation logic here
+
+#         return JsonResponse({'message': 'User created successfully'})
+#     except Exception as e:
+#         return JsonResponse({'message': 'Error creating user', 'error': str(e)}, status=400)
+            
 @api_view(['POST'])
 def setUsers(request):
-    print("hellodworkd")
-    
-    user_name = request.data.get('user_name')
-    password = request.data.get('password')
-    mobile_number = request.data.get('mobile')
-    
-    birth_date = request.data.get('birth_date')
-    email=request.data.get('email')
-    print(0)
-    # Users.objects.create(user_name=user_name, password=password, mobile_number=mobile,profile_pic=profile_pic, cover_photo=cover_photo,birth_date=birth_date)
-    with connections['default'].cursor() as cursor:
-        print(1)
-        cursor.execute("INSERT INTO USERS (user_name, password, mobile_number, birth_date,email) VALUES (  %s, %s, %s, TO_DATE(%s, 'YYYY-MM-DD'),%s)",
-            [user_name, password, mobile_number, birth_date,email])
-        print(2)
     try:
-        # Your user creation logic here
+        print("hello world")
+        
+        user_name = request.data.get('user_name')
+        password = request.data.get('password')
+        mobile_number = request.data.get('mobile')
+        birth_date = request.data.get('birth_date')
+        email = request.data.get('email')
+        
+        print(0)
+        
+        with connections['default'].cursor() as cursor:
+            print(1)
+            # Use a cursor variable to capture the RETURNING value
+            user_id = cursor.var(int)
+            
+            cursor.execute("INSERT INTO USERS (user_name, password, mobile_number, birth_date, email) VALUES (%s, %s, %s, TO_DATE(%s, 'YYYY-MM-DD'), %s) RETURNING user_id INTO %s",
+                [user_name, password, mobile_number, birth_date, email, user_id])
+            
+            # Fetch the value of user_id after executing the query
+            user_id_value = user_id.getvalue()[0]
+            
+            print(user_id_value)
+            print(2)
+            
+            # Your user creation logic here
 
-        return JsonResponse({'message': 'User created successfully'})
+            return JsonResponse({'message': 'success'})
     except Exception as e:
         return JsonResponse({'message': 'Error creating user', 'error': str(e)}, status=400)
-            
+           
 @api_view(['POST'])
 def setImages(request):
     if request.method == 'POST':
