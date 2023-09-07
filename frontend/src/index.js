@@ -5,31 +5,24 @@ import "./index.css";
 import Root from "./routes/root";
 import SignIn from "./routes/SignIn";
 import PersistentDrawerLeft from "./routes/PersistentDrawerLeft";
+import SimpleContainer from "./components/container";
 
-
-import  { loader as rootLoader } from "./routes/root";
+import { loader as rootLoader } from "./routes/root";
+import ImgMediaCard from "./components/FriendReq";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root/>,
-   
-    
+    element: <Root />,
   },
   {
     path: "/routes/SignIn",
-    element: <SignIn/>,
-   
-    
+    element: <SignIn />,
   },
   {
     path: "/routes/PersistentDrawerLeft",
-    element: <PersistentDrawerLeft/>,
-   
-    
+    element: <PersistentDrawerLeft />,
   },
-  
-  
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
